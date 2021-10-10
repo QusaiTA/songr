@@ -1,0 +1,22 @@
+body {
+background-color : black;
+    background-image: url("https://c8.alamy.com/comp/2F99X9X/music-notes-song-melody-or-tune-vector-icon-on-dark-background-graph-symbol-for-music-and-sound-web-site-and-apps-design-logo-app-ui-2F99X9X.jpg");
+
+
+ }
+p{
+   text-align: center;
+    color: aliceblue;
+}
+h1{
+    text-align : center;
+    font-family: "Droid Sans Mono", serif;
+    color: aliceblue;
+
+ }
+
+
+
+.album img {
+    width : 100%
+}
