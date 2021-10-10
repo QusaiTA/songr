@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Title</title>
+</head>
+<body>
+<h1>Albums</h1>
+<div class="albums">
+<tr th:each="Albums: ${album}">
+    <td th:text="${Albums.getTitle()}"></td>
+    <br>
+    <td th:text="${Albums.getArtist()}"></td>
+    <br>
+    <td th:text="${Albums.getSongCount()}"></td>
+    <br>
+    <td th:text="${Albums.getLenght()}"></td>
+    <img th:src="${Albums.getImageURL()}" style="size: A4">
+</tr>
+    </div>
+
+
+</body>
+</html>
