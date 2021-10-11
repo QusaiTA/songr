@@ -8,19 +8,37 @@
 </head>
 <body>
 <h1>Albums</h1>
+<div>
+    <form action="/albums2" method="post">
+        <p>Title</p><input type="text" name="title"/></br>
+        <p>Artist</p><input type="text" name="artist"/></br>
+
+        <p>Image Url </p><input type="text" name="imageURL"/></br>
+        <p>Song Count</p><input type="text" name="songCount"/></br>
+        <p>Length</p><input type="text" name="length"/></br>
+
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
 <div class="albums">
-<tr th:each="Albums: ${album}">
+<tr th:each="Albums: ${albums}">
     <td th:text="${Albums.getTitle()}"></td>
     <br>
     <td th:text="${Albums.getArtist()}"></td>
     <br>
+    <img th:src="${Albums.getImageURL()}" />
+    <br>
     <td th:text="${Albums.getSongCount()}"></td>
     <br>
-    <td th:text="${Albums.getLenght()}"></td>
-    <img th:src="${Albums.getImageURL()}" style="size: A4">
+    <td th:text="${Albums.getLength()}"></td>
+
 </tr>
     </div>
 
+>
 
 </body>
 </html>
