@@ -1,7 +1,9 @@
 package com.songr.songr.Controller;
 
 import com.songr.songr.Model.Albums;
+import com.songr.songr.Model.Song;
 import com.songr.songr.repository.AlbumRepository;
+import com.songr.songr.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,12 @@ import java.util.Locale;
 public class BasicController {
 
     @Autowired
-    private AlbumRepository albumRepository;
+    SongRepository songRepository;
+
+    @Autowired
+    AlbumRepository albumRepository;
+
+
 
     @GetMapping("/hello")
     public String greeting(@RequestParam(name="name", required = false, defaultValue = "World")String name, Model model){
@@ -64,6 +71,32 @@ public class BasicController {
         return new RedirectView("/albums2");
 
     }
+
+    @GetMapping("/songs")
+    public String getSongs(Model song){
+        song.addAttribute("song",songRepository.findAll());
+        return "songs";
+    }
+
+    @GetMapping("/addSong")
+    public String Form(){
+        return "addSong";
+    }
+
+    @PostMapping("/songs")
+    public RedirectView addSong(@RequestParam Long albums_id,
+                                @RequestParam String title,
+                                @RequestParam int length,
+                                @RequestParam int trackNumber){
+        Albums albums = albumRepository.getById(albums_id);
+        Song song = new Song(albums,title,length,trackNumber);
+        songRepository.save(song);
+
+        return new RedirectView("/songs");
+    }
+
+
+
 
 
 
