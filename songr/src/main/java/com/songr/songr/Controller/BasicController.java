@@ -5,15 +5,15 @@ import com.songr.songr.Model.Song;
 import com.songr.songr.repository.AlbumRepository;
 import com.songr.songr.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class BasicController {
@@ -38,43 +38,35 @@ public class BasicController {
        return "toUpperCase";
     }
 
-    Albums albums []= {
-            new Albums("romantic album","JB" , "https://media.newyorker.com/photos/5e2b598351d1330009001749/master/pass/Fry-JustinBieberDocuseries.jpg",200,2000),
-            new Albums("rab album","Eminem" , "https://etbilarabi.com/sites/default/files/styles/article_landing/public/2020-03/BAFBDC61-35D2-4A4E-A9F6-4C41F1B47403.jpeg?itok=zNDV0gxy",452,10000),
-            new Albums("fun album","Selena Gomez" , "https://images.indianexpress.com/2021/08/Selena-Gomez-1200.jpg",5000,20),
-    };
+    @GetMapping("/getAllAlbums")
+    public String albums(Model model){
+        ArrayList<Albums>albums = new ArrayList<>();
+        Albums first = new Albums("romantic album","JB" , 344,200,"https://media.newyorker.com/photos/5e2b598351d1330009001749/master/pass/Fry-JustinBieberDocuseries.jpg");
+        Albums second = new Albums("rab album","Eminem" , 32,452,"https://etbilarabi.com/sites/default/files/styles/article_landing/public/2020-03/BAFBDC61-35D2-4A4E-A9F6-4C41F1B47403.jpeg?itok=zNDV0gxy");
+        Albums third = new Albums("fun album","Selena Gomez" , 20,5000,"https://etbilarabi.com/sites/default/files/styles/article_landing/public/2020-03/BAFBDC61-35D2-4A4E-A9F6-4C41F1B47403.jpeg?itok=zNDV0gxy");
+        albums.add(first);
+        albums.add(second);
+        albums.add(third);
+        model.addAttribute("album",albums);
+        return "StaticAlbums";
+    }
 
+    @PostMapping("/albums")
+    public RedirectView createAlbum(@ModelAttribute Albums albums){
+        albumRepository.save(albums);
+        return new RedirectView("/albums");
+    }
 
     @GetMapping("/albums")
-    public String albums(Model model){
-        model.addAttribute("album",albums);
-        return "albums";
-    }
-
-    @GetMapping("/albums2")
-
     public String getAlbumsAllData(Model model) {
         model.addAttribute("albums", albumRepository.findAll());
-        return "albums";
-    }
-
-    @PostMapping("/albums2")
-    public RedirectView addNewAlbum(@RequestParam (value = "title") String title ,
-                                    @RequestParam (value = "artist") String artist,
-                                    @RequestParam (value = "imageURL") String imageURL ,
-                                    @RequestParam (value = "songCount") int songCount,
-                                    @RequestParam (value = "length")  int length)
-    {
-
-        Albums albums = new Albums(title,artist,imageURL,songCount,length);
-        albumRepository.save(albums);
-        return new RedirectView("/albums2");
-
+        return "newAlbums";
     }
 
     @GetMapping("/songs")
     public String getSongs(Model song){
-        song.addAttribute("song",songRepository.findAll());
+        List<Song>songs = songRepository.findAll();
+        song.addAttribute("song",songs);
         return "songs";
     }
 
@@ -84,16 +76,19 @@ public class BasicController {
     }
 
     @PostMapping("/songs")
-    public RedirectView addSong(@RequestParam Long albums_id,
-                                @RequestParam String title,
-                                @RequestParam int length,
-                                @RequestParam int trackNumber){
-        Albums albums = albumRepository.getById(albums_id);
-        Song song = new Song(albums,title,length,trackNumber);
-        songRepository.save(song);
+    public RedirectView addSong(@RequestParam (value = "albumID")Long albums_id,Model song,
+                                @RequestParam (value = "title")String title,
+                                @RequestParam (value = "length")int length,
+                                @RequestParam (value = "trackNumber")int trackNumber){
+        Albums albums = albumRepository.findById(albums_id).get();
+        Song songs = new Song(albums,title,length,trackNumber);
+        songRepository.save(songs);
+        Albums albums1 = albumRepository.findById(albums.getId()).get();
+        song.addAttribute("song", albums1.getSongs());
 
         return new RedirectView("/songs");
     }
+
 
 
 

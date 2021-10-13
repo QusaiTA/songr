@@ -17,6 +17,10 @@ public class Song {
     private int length;
     private int trackNumber;
 
+
+    public Song() {
+    }
+
     public Song(Albums albums, String title, int length, int trackNumber) {
         this.albums = albums;
         this.title = title;
@@ -28,8 +32,7 @@ public class Song {
         return albums;
     }
 
-    public Song() {
-    }
+
 
     public void setAlbums(Albums albums) {
         this.albums = albums;

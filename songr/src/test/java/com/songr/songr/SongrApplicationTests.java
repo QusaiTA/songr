@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class SongrApplicationTests {
-	Albums albums = new Albums("yeh","Qusai","daddadadada",500,50000);
+	Albums albums = new Albums("yeh","Qusai",3,500,"https://etbilarabi.com/sites/default/files/styles/article_landing/public/2020-03/BAFBDC61-35D2-4A4E-A9F6-4C41F1B47403.jpeg?itok=zNDV0gxy");
 
 
 	@Test
