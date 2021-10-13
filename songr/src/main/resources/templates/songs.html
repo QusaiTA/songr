@@ -9,11 +9,11 @@
 
 <div class="albums">
     <tr th:each="song: ${song}">
-        <td th:text="${song.albums_id}"></td>
+        <td th:text="${song.id}"></td>
         <br>
         <td th:text="${song.title}"></td>
         <br>
-        <img th:src="${song.length}" />
+        <td th:text="${song.length}" />
         <br>
         <td th:text="${song.trackNumber}"></td>
         <br>

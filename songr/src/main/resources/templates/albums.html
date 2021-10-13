@@ -8,37 +8,43 @@
 </head>
 <body>
 <h1>Albums</h1>
-<div>
-    <form action="/albums2" method="post">
-        <p>Title</p><input type="text" name="title"/></br>
-        <p>Artist</p><input type="text" name="artist"/></br>
 
-        <p>Image Url </p><input type="text" name="imageURL"/></br>
-        <p>Song Count</p><input type="text" name="songCount"/></br>
-        <p>Length</p><input type="text" name="length"/></br>
+<form action="/getAllAlbums" method="post">
+    <label>Title</label>
+    <input type="text" name="title" />
 
+    <label>Artist</label>
+    <input type="text" name="artist" />
 
-        <button type="submit">Submit</button>
-    </form>
-</div>
+    <label>Image URL</label>
+    <input type="text" name="songCount" />
 
+    <label>Length</label>
+    <input type="number" name="length" />
+
+    <label>Songs Count</label>
+    <input type="number" name="ImageURL" />
+
+    <input type="submit" value="submit">
+</form>
 
 <div class="albums">
 <tr th:each="Albums: ${albums}">
-    <td th:text="${Albums.getTitle()}"></td>
+    <td th:text="${Albums.title}"></td>
     <br>
-    <td th:text="${Albums.getArtist()}"></td>
+    <td th:text="${Albums.artist}"></td>
     <br>
-    <img th:src="${Albums.getImageURL()}" />
+    <td th:text="${Albums.songCount}"></td>
     <br>
-    <td th:text="${Albums.getSongCount()}"></td>
+    <td th:text="${Albums.length}"></td>
     <br>
-    <td th:text="${Albums.getLength()}"></td>
+    <img th:src="${Albums.imageURL}"  src="image"/>
+    <br>
 
 </tr>
     </div>
 
->
+
 
 </body>
 </html>

@@ -16,7 +16,7 @@ public class Albums {
     private int songCount;
     private int length;
 
-    @OneToMany(mappedBy = "albums")
+    @OneToMany(mappedBy = "albums" , cascade = CascadeType.ALL)
     private List<Song> songs;
 
     public Albums() {
@@ -27,7 +27,7 @@ public class Albums {
         return id;
     }
 
-    public Albums(String title, String artist, String imageURL, int songCount, int length) {
+    public Albums(String title, String artist,  int songCount ,int length ,String imageURL) {
         this.title = title;
         this.artist = artist;
         this.imageURL = imageURL;
